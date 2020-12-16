@@ -1,0 +1,11 @@
+#Install Package
+sudo apt-get install libnss3-tools
+
+#Generate Certificate
+cd /etc/nginx
+sudo mkdir ssl
+cd ssl
+sudo openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout localhost.key -out localhost.crt
+
+#Trust Certificate
+certutil -d sql:$HOME/.pki/nssdb -A -t "CT,c,c" -n "localhost" -i /etc/nginx/ssl/localhost.crt
